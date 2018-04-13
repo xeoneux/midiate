@@ -11,5 +11,8 @@
   "license": "ISC",
   "devDependencies": {
     "typescript": "^2.8.1"
+  },
+  "dependencies": {
+    "midi-player-js": "^2.0.3"
   }
 }
