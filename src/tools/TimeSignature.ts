@@ -1,41 +1,38 @@
 import { Event } from "midi-player-js";
 
 export interface TimeSignature {
+  tick: number;
   upper: number;
   lower: number;
 }
 
-export interface TimeSignatureEvent {
-  [tick: number]: TimeSignature;
-}
-
-export function parseTimeSignature(value: string): TimeSignature {
+export function parseTimeSignature(value: string) {
   const index = value.indexOf("/");
   const upper = parseInt(value.slice(0, index));
   const lower = parseInt(value.slice(index + 1, value.length));
   return { upper, lower };
 }
 
-export function getTimeSignatureEvents(
-  tracks: Event[][]
-): TimeSignatureEvent[] {
+export function getTimeSignatures(tracks: Event[][]): TimeSignature[] {
   let initialExists = false;
-  let timeSignatureEvents: TimeSignatureEvent[] = [];
+  let timeSignatures: TimeSignature[] = [];
+
   tracks.forEach(events =>
     events.forEach(event => {
       if (event.name === "Time Signature") {
-        const timeSignatureEvent: TimeSignatureEvent = {};
-        timeSignatureEvent[event.tick] = parseTimeSignature(
-          event.timeSignature
-        );
-        timeSignatureEvents.push(timeSignatureEvent);
+        const { upper, lower } = parseTimeSignature(event.timeSignature);
+        timeSignatures.push({ upper, lower, tick: event.tick });
         if (event.tick === 0) initialExists = true;
       }
     })
   );
 
   if (!initialExists)
-    timeSignatureEvents.unshift({ 0: { upper: 4, lower: 4 } });
+    timeSignatures.unshift({
+      tick: 0,
+      upper: 4,
+      lower: 4
+    });
 
-  return timeSignatureEvents;
+  return timeSignatures;
 }
