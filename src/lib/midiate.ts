@@ -1,5 +1,6 @@
 import { Player, Event } from "midi-player-js";
 
+import { getMeasures } from "../tools/Measure";
 import { getTimeSignatures } from "../tools/TimeSignature";
 
 const player = new Player();
@@ -19,12 +20,6 @@ export class Midiate {
   calculateMeasures = () => {
     player.getTotalTicks();
     const timeSignatures = getTimeSignatures(this.tracks);
-    timeSignatures.forEach(timeSignature => {
-      const ppq = this.ppq;
-      const beat = 4 * ppq / timeSignature.lower;
-      const measure = beat * timeSignature.upper;
-    });
+    const measures = getMeasures(this.ppq, player.totalTicks, timeSignatures);
   };
 }
-
-new Midiate("src/lib/fur_elise.mid").calculateMeasures();
