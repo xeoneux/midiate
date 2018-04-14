@@ -1,0 +1,46 @@
+body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  font-family: sans-serif;
+}
+
+#midiate {
+  width: 100vw;
+  height: 100vh;
+  background: #303030;
+}
+
+.piano {
+  position: relative;
+  height: 25vh;
+}
+
+.key {
+  cursor: pointer;
+  position: absolute;
+  box-sizing: border-box;
+  border: 1px solid gray;
+  transition: all 0.1s ease;
+  border-radius: 0 0 5px 5px;
+  transform-origin: top center;
+  transform: translate(0, 0) rotateX(0);
+  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.3);
+}
+
+.key.black {
+  z-index: 2;
+  height: 66.67%;
+  background: black;
+}
+
+.key.white {
+  z-index: 1;
+  height: 100%;
+  background: white;
+}
+
+.key:active {
+  background: gray;
+  transform: rotateX(-1deg) scale(0.95);
+}

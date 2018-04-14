@@ -13,9 +13,13 @@
   },
   "license": "MIT",
   "devDependencies": {
+    "react": "^16.3.1",
+    "react-dom": "^16.3.1",
+    "react-dropzone": "^4.2.9",
     "typescript": "^2.8.1"
   },
   "dependencies": {
+    "drag-drop": "^2.14.0",
     "midi-player-js": "^2.0.3"
   }
 }
