@@ -1,13 +1,13 @@
-import { Player, Event } from "midi-player-js";
+import { Event, Player } from "midi-player-js";
 
-import { getMeasures } from "../tools/Measure";
+import { getMeasures, Measure } from "../tools/Measure";
 import { getTimeSignatures } from "../tools/TimeSignature";
 
 const player = new Player();
 
 export class Midiate {
-  ppq: number;
-  tracks: Event[][];
+  public ppq: number;
+  public tracks: Event[][];
 
   constructor(location: string) {
     player.loadFile(location);
@@ -17,9 +17,9 @@ export class Midiate {
     this.tracks = tracks;
   }
 
-  calculateMeasures = () => {
+  public calculateMeasures = (): Measure[] => {
     player.getTotalTicks();
     const timeSignatures = getTimeSignatures(this.tracks);
-    const measures = getMeasures(this.ppq, player.totalTicks, timeSignatures);
+    return getMeasures(this.ppq, player.totalTicks, timeSignatures);
   };
 }

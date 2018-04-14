@@ -1,14 +1,17 @@
 {
   "name": "midiate",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "version": "0.0.3",
+  "description": "Tool to derive data from MIDI files",
+  "main": "build/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": {
+    "name": "Aayush Kapoor",
+    "email": "xeoneux@icloud.com"
+  },
+  "license": "MIT",
   "devDependencies": {
     "typescript": "^2.8.1"
   },

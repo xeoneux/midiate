@@ -15,7 +15,7 @@ export function parseTimeSignature(value: string) {
 
 export function getTimeSignatures(tracks: Event[][]): TimeSignature[] {
   let initialExists = false;
-  let timeSignatures: TimeSignature[] = [];
+  const timeSignatures: TimeSignature[] = [];
 
   tracks.forEach(events =>
     events.forEach(event => {
@@ -27,12 +27,13 @@ export function getTimeSignatures(tracks: Event[][]): TimeSignature[] {
     })
   );
 
-  if (!initialExists)
+  if (!initialExists) {
     timeSignatures.unshift({
       tick: 0,
       upper: 4,
       lower: 4
     });
+  }
 
   return timeSignatures;
 }

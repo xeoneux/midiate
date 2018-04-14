@@ -48,5 +48,6 @@ typings/
 # next.js build output
 .next
 
-# Distribution output
-dist/
+# output
+build
+dist

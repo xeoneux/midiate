@@ -1,1 +1,1 @@
-export * from "./lib/midiate";
+export * from "./lib/Midiate";

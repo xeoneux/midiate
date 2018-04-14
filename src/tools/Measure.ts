@@ -14,21 +14,21 @@ export function getMeasures(
   const measures: Measure[] = [];
 
   signatures.forEach((signature, index) => {
-    const beat = 4 * ppq / signature.lower;
+    const beat = ppq * 4 / signature.lower;
     const measure = beat * signature.upper;
 
-    let nextChangeTick: number;
     const isLastSignature = index + 1 === signatures.length;
-    if (isLastSignature) nextChangeTick = lastTick;
-    else nextChangeTick = signatures[index + 1].tick;
+    const nextChangeTick = !isLastSignature
+      ? signatures[index + 1].tick
+      : lastTick;
 
     const totalMeasures = nextChangeTick / measure;
     const perfectMeasures = Math.floor(totalMeasures);
 
     for (let index = 0; index < perfectMeasures; index++) {
-      const ticks = measure;
-      const from = index * measure;
       const to = (index + 1) * measure;
+      const from = index * measure;
+      const ticks = measure;
       measures.push({ to, from, ticks });
     }
 
