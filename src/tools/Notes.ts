@@ -13,8 +13,7 @@ export interface Note {
   pre: NoteState;
   post: NoteState;
   velocity: number;
-  measureOn: number;
-  measureOff: number;
+  measure: Measure;
 }
 
 export interface NoteEvent {
@@ -93,10 +92,9 @@ export function generateNotesForMeasures(
                 to: noteEvent.tick,
                 from: noteMatch.tick,
                 value: noteEvent.value,
-                track: noteEvent.track,
+                track: noteMatch.track,
+                measure: noteEvent.measure,
                 velocity: noteMatch.velocity,
-                measureOn: noteMatch.measure.index,
-                measureOff: noteEvent.measure.index,
                 pre:
                   noteMatch.measure.index !== currentMeasure
                     ? "running"
@@ -118,9 +116,8 @@ export function generateNotesForMeasures(
                 track: runningNote.track,
                 value: runningNote.value,
                 to: runningNote.measure.to,
+                measure: runningNote.measure,
                 velocity: runningNote.velocity,
-                measureOn: runningNote.measure.index,
-                measureOff: currentMeasure,
                 pre:
                   currentMeasure === runningNote.measure.index
                     ? "complete"

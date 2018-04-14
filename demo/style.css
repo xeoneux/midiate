@@ -27,16 +27,16 @@ body {
   box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.3);
 }
 
-.key.black {
-  z-index: 2;
-  height: 66.67%;
-  background: black;
-}
-
 .key.white {
   z-index: 1;
   height: 100%;
   background: white;
+}
+
+.key.black {
+  z-index: 2;
+  height: 66.67%;
+  background: black;
 }
 
 .key:active {
@@ -44,14 +44,27 @@ body {
   transform: rotateX(-1deg) scale(0.95);
 }
 
-.rain {
+.slides {
   width: 100vw;
   height: 75vh;
   overflow-x: hidden;
   overflow-y: scroll;
+  transform: scaleY(-1);
 }
 
 .slide {
   width: 100vw;
   height: 25vh;
+  position: relative;
+}
+
+.note {
+  z-index: 3;
+  height: 5px;
+  position: absolute;
+  background-color: tomato;
+}
+
+.measure {
+  transform: scaleY(-1);
 }
