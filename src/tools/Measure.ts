@@ -5,6 +5,7 @@ export interface Measure {
   from: number;
   beat: number;
   ticks: number;
+  index: number;
 }
 
 export function getMeasures(
@@ -14,13 +15,13 @@ export function getMeasures(
 ): Measure[] {
   const measures: Measure[] = [];
 
-  signatures.forEach((signature, index) => {
-    const beat = ppq * 4 / signature.lower;
-    const measure = beat * signature.upper;
+  signatures.forEach((sig, idx) => {
+    const beat = ppq * 4 / sig.lower;
+    const measure = beat * sig.upper;
 
-    const isLastSignature = index + 1 === signatures.length;
+    const isLastSignature = idx + 1 === signatures.length;
     const nextChangeTick = !isLastSignature
-      ? signatures[index + 1].tick
+      ? signatures[idx + 1].tick
       : lastTick;
 
     const totalMeasures = nextChangeTick / measure;
@@ -31,7 +32,7 @@ export function getMeasures(
       const from = index * measure;
       const ticks = measure;
 
-      measures.push({ to, from, beat, ticks });
+      measures.push({ to, from, beat, ticks, index });
     }
 
     if (perfectMeasures !== totalMeasures) {
@@ -39,7 +40,8 @@ export function getMeasures(
         beat,
         to: nextChangeTick,
         from: measure * perfectMeasures,
-        ticks: nextChangeTick - measure * perfectMeasures
+        ticks: nextChangeTick - measure * perfectMeasures,
+        index: perfectMeasures + 1
       });
     }
   });
