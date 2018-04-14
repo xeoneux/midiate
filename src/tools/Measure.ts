@@ -27,7 +27,7 @@ export function getMeasures(
     const perfectMeasures = Math.floor(totalMeasures);
 
     for (let index = 0; index < perfectMeasures; index++) {
-      const to = (index + 1) * measure;
+      const to = (index + 1) * measure - 1;
       const from = index * measure;
       const ticks = measure;
 
