@@ -17,7 +17,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      keyboard: generateKeyboard(KeyboardTypes.$88)
+      keyboard: generateKeyboard(KeyboardTypes.$128)
     };
 
     this.onDrop = this.onDrop.bind(this);
@@ -94,8 +94,14 @@ class Slides extends React.Component {
       <div className="slides">
         {this.props.measures
           ? this.props.measures.map((measure, index) => (
-              <div key={index} className="slide">
-                <h1 className="measure">{index}</h1>
+              <div
+                key={index}
+                className="slide"
+                style={{
+                  backgroundColor: index % 2 === 0 ? "#bcbcbc" : "#cbcbcb"
+                }}
+              >
+                <h1 className="measure">{index + 1}</h1>
                 {this.props.tracks
                   ? this.props.tracks.map((track, color) =>
                       track
