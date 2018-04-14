@@ -3,6 +3,7 @@ import { TimeSignature } from "./TimeSignature";
 export interface Measure {
   to: number;
   from: number;
+  beat: number;
   ticks: number;
 }
 
@@ -29,11 +30,13 @@ export function getMeasures(
       const to = (index + 1) * measure;
       const from = index * measure;
       const ticks = measure;
-      measures.push({ to, from, ticks });
+
+      measures.push({ to, from, beat, ticks });
     }
 
     if (perfectMeasures !== totalMeasures) {
       measures.push({
+        beat,
         to: nextChangeTick,
         from: measure * perfectMeasures,
         ticks: nextChangeTick - measure * perfectMeasures

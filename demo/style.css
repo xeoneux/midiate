@@ -2,18 +2,17 @@ body {
   margin: 0;
   padding: 0;
   overflow: hidden;
-  font-family: sans-serif;
 }
 
-#midiate {
+.app {
   width: 100vw;
   height: 100vh;
   background: #303030;
 }
 
 .piano {
-  position: relative;
   height: 25vh;
+  position: relative;
 }
 
 .key {
@@ -43,4 +42,16 @@ body {
 .key:active {
   background: gray;
   transform: rotateX(-1deg) scale(0.95);
+}
+
+.rain {
+  width: 100vw;
+  height: 75vh;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+
+.slide {
+  width: 100vw;
+  height: 25vh;
 }

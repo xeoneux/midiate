@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import Dropzone from "react-dropzone";
 
 import { Midiate } from "../build";
 
@@ -13,22 +14,47 @@ const KeyboardTypes = {
 };
 
 class App extends React.Component {
-  render() {
-    return <Piano />;
-  }
-}
-
-class Piano extends React.Component {
   constructor(props) {
     super(props);
-    this.state = generateKeyboard(KeyboardTypes.$128);
+    this.state = {
+      measures: [],
+      keyboardType: KeyboardTypes.$88
+    };
+
+    this.onDrop = this.onDrop.bind(this);
+  }
+
+  onDrop(acceptedFiles, rejectedFiles) {
+    acceptedFiles.forEach(file => {
+      const reader = new FileReader();
+      reader.onload = () => {
+        const arrayBuffer = reader.result;
+        const midiate = new Midiate(arrayBuffer);
+        this.setState({ measures: midiate.calculateMeasures() });
+      };
+      reader.onerror = () => console.log("file reading has failed");
+      reader.onabort = () => console.log("file reading was aborted");
+
+      reader.readAsArrayBuffer(file);
+    });
   }
 
   render() {
     return (
+      <Dropzone className="app" onDrop={this.onDrop} disableClick={true}>
+        <Piano keyboard={generateKeyboard(this.state.keyboardType)} />
+        <Rain measures={this.state.measures} />
+      </Dropzone>
+    );
+  }
+}
+
+class Piano extends React.PureComponent {
+  render() {
+    return (
       <div className="piano">
-        {this.state.pianoKeys.map((pianoKey, keyIndex) => {
-          const keyWidth = 100 / this.state.whiteKeys.length;
+        {this.props.keyboard.pianoKeys.map((pianoKey, keyIndex) => {
+          const keyWidth = 100 / this.props.keyboard.whiteKeys.length;
 
           let left;
           let width;
@@ -51,6 +77,26 @@ class Piano extends React.Component {
             />
           );
         })}
+      </div>
+    );
+  }
+}
+
+class Rain extends React.Component {
+  render() {
+    return (
+      <div className="rain">
+        {this.props.measures
+          ? this.props.measures.map((measure, index) => (
+              <div
+                key={index}
+                className="slide"
+                style={{ backgroundColor: "#606060" }}
+              >
+                Measure
+              </div>
+            ))
+          : null}
       </div>
     );
   }
