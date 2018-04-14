@@ -13,6 +13,8 @@ export interface Note {
   pre: NoteState;
   post: NoteState;
   velocity: number;
+  measureOn: number;
+  measureOff: number;
 }
 
 export interface NoteEvent {
@@ -21,9 +23,13 @@ export interface NoteEvent {
   track: number;
   type: NoteType;
   velocity: number;
+  measure: Measure;
 }
 
-export function getNoteEventTracks(tracks: Event[][]): NoteEvent[][] {
+export function getNoteEventTracks(
+  tracks: Event[][],
+  measures: Measure[]
+): NoteEvent[][] {
   const noteEventTracks: NoteEvent[][] = [];
 
   tracks.forEach((track, index) => {
@@ -36,7 +42,8 @@ export function getNoteEventTracks(tracks: Event[][]): NoteEvent[][] {
             track: index,
             tick: event.tick,
             value: event.noteNumber,
-            velocity: event.velocity || 127
+            velocity: event.velocity || 127,
+            measure: getMeasureForNoteEvent(event.tick, measures)
           });
       }
 
@@ -47,7 +54,8 @@ export function getNoteEventTracks(tracks: Event[][]): NoteEvent[][] {
             track: index,
             tick: event.tick,
             value: event.noteNumber,
-            velocity: event.velocity || 0
+            velocity: event.velocity || 0,
+            measure: getMeasureForNoteEvent(event.tick, measures)
           });
       }
     });
@@ -58,7 +66,6 @@ export function getNoteEventTracks(tracks: Event[][]): NoteEvent[][] {
 }
 
 export function generateNotesForMeasures(
-  measures: Measure[],
   noteEventTracks: NoteEvent[][]
 ): Note[][] {
   const noteTracks: Note[][] = [];
@@ -66,9 +73,9 @@ export function generateNotesForMeasures(
     const notes: Note[] = [];
     let currentMeasure = 0;
     const runningNotes: NoteEvent[] = [];
+
     track.forEach(noteEvent => {
-      const noteMeasure = getMeasureForNoteEvent(noteEvent, measures);
-      if (noteMeasure.index === currentMeasure) {
+      if (currentMeasure === noteEvent.measure.index) {
         pairMatchedNotes();
       } else {
         currentMeasure++;
@@ -82,13 +89,18 @@ export function generateNotesForMeasures(
           for (let noteMatch of runningNotes) {
             if (noteMatch.value === noteEvent.value) {
               notes.push({
-                pre: "complete",
                 post: "complete",
                 to: noteEvent.tick,
                 from: noteMatch.tick,
                 value: noteEvent.value,
                 track: noteEvent.track,
-                velocity: noteMatch.velocity
+                velocity: noteMatch.velocity,
+                measureOn: noteMatch.measure.index,
+                measureOff: noteEvent.measure.index,
+                pre:
+                  noteMatch.measure.index !== currentMeasure
+                    ? "running"
+                    : "complete"
               });
               runningNotes.splice(runningNotes.indexOf(noteMatch), 1);
             }
@@ -98,8 +110,23 @@ export function generateNotesForMeasures(
 
       function completeUnmatchedNotes() {
         if (runningNotes.length) {
-          console.log(runningNotes.length);
-          runningNotes.forEach(runningNote => {});
+          runningNotes.forEach(runningNote => {
+            if (runningNote.type === "on")
+              notes.push({
+                post: "running",
+                from: runningNote.tick,
+                track: runningNote.track,
+                value: runningNote.value,
+                to: runningNote.measure.to,
+                velocity: runningNote.velocity,
+                measureOn: runningNote.measure.index,
+                measureOff: currentMeasure,
+                pre:
+                  currentMeasure === runningNote.measure.index
+                    ? "complete"
+                    : "running"
+              });
+          });
         }
       }
     });
@@ -110,12 +137,11 @@ export function generateNotesForMeasures(
 }
 
 export function getMeasureForNoteEvent(
-  noteEvent: NoteEvent,
+  noteTick: number,
   measures: Measure[]
 ): Measure {
   for (let measure of measures) {
-    if (noteEvent.tick <= measure.to && noteEvent.tick >= measure.from)
-      return measure;
+    if (noteTick <= measure.to && noteTick >= measure.from) return measure;
   }
   throw new Error("Not in provided measures");
 }

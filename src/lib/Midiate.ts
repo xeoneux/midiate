@@ -18,8 +18,8 @@ export class Midiate {
 
   public calculateNotes = () => {
     const measures = this.calculateMeasures();
-    const noteEventTracks = getNoteEventTracks(player.getEvents());
-    const measuredNotes = generateNotesForMeasures(measures, noteEventTracks);
+    const noteEventTracks = getNoteEventTracks(player.getEvents(), measures);
+    const measuredNotes = generateNotesForMeasures(noteEventTracks);
     console.log(measuredNotes);
   };
 }
