@@ -95,7 +95,7 @@ class Slides extends React.Component {
         {this.props.measures
           ? this.props.measures.map((measure, index) => (
               <div key={index} className="slide">
-                <span className="measure">{index}</span>
+                <h1 className="measure">{index}</h1>
                 {this.props.tracks
                   ? this.props.tracks.map((track, color) =>
                       track
@@ -114,10 +114,13 @@ class Slides extends React.Component {
 
                           let left;
                           let width;
+                          let zIndex;
                           if (pianoKey.type === "white") {
+                            zIndex = 5;
                             width = keyWidth;
                             left = pianoKey.position * keyWidth;
                           } else {
+                            zIndex = 6;
                             width = 2 / 3 * keyWidth;
                             left =
                               (keyIndex - pianoKey.position - 1 / 3) * keyWidth;
@@ -132,13 +135,17 @@ class Slides extends React.Component {
                           if (color === 0) backgroundColor = "red";
                           if (color === 1) backgroundColor = "green";
                           if (color === 2) backgroundColor = "blue";
-                          if (color === 3) backgroundColor = "yellow";
+                          if (color === 3) backgroundColor = "orange";
+
+                          if (pianoKey.type === "black")
+                            backgroundColor = "dark" + backgroundColor;
 
                           return (
                             <div
                               key={index}
                               className="note"
                               style={{
+                                zIndex,
                                 backgroundColor,
                                 left: `${left}vw`,
                                 width: `${width}vw`,

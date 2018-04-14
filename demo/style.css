@@ -7,7 +7,7 @@ body {
 .app {
   width: 100vw;
   height: 100vh;
-  background: #303030;
+  background: #bcbcbc;
 }
 
 .piano {
@@ -59,12 +59,13 @@ body {
 }
 
 .note {
-  z-index: 3;
-  height: 5px;
   position: absolute;
-  background-color: tomato;
+  border-radius: 5px;
 }
 
 .measure {
+  margin: 0;
+  color: dimgrey;
+  position: absolute;
   transform: scaleY(-1);
 }
