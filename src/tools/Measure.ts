@@ -30,7 +30,7 @@ export function getMeasures(
     for (let index = 0; index < perfectMeasures; index++) {
       const to = (index + 1) * measure - 1;
       const from = index * measure;
-      const ticks = measure;
+      const ticks = to - from + 1;
 
       measures.push({ to, from, beat, ticks, index });
     }
@@ -40,7 +40,7 @@ export function getMeasures(
         beat,
         to: nextChangeTick,
         from: measure * perfectMeasures,
-        ticks: nextChangeTick - measure * perfectMeasures,
+        ticks: nextChangeTick - measure * perfectMeasures + 1,
         index: perfectMeasures + 1
       });
     }

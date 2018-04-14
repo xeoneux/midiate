@@ -31,6 +31,7 @@ class App extends React.Component {
         const arrayBuffer = reader.result;
         const midiate = new Midiate(arrayBuffer);
         this.setState({ measures: midiate.calculateMeasures() });
+        midiate.calculateNotes();
       };
       reader.onerror = () => console.log("file reading has failed");
       reader.onabort = () => console.log("file reading was aborted");
