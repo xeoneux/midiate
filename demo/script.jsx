@@ -98,6 +98,7 @@ class Slides extends React.Component {
               key={index}
               className="slide"
               style={{
+                height: `${6.25 * (measure.ticks / measure.beat)}vh`,
                 backgroundColor: index % 2 === 0 ? "#bcbcbc" : "#cbcbcb"
               }}
             >
@@ -146,14 +147,15 @@ class Slides extends React.Component {
 
                         return (
                           <div
-                            key={index}
+                            key={note.value + "" + note.to + "" + note.from}
                             className="note"
                             style={{
                               zIndex,
                               backgroundColor,
                               left: `${left}vw`,
                               width: `${width}vw`,
-                              height: `${height}%`
+                              height: `${height}%`,
+                              top: `${note.from / note.measure.ticks * 100}%`
                             }}
                           />
                         );
