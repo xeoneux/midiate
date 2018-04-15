@@ -10,6 +10,28 @@ body {
   background: #bcbcbc;
 }
 
+.text {
+  color: #222;
+  font-size: 30px;
+  text-align: center;
+  transform: scaleY(-1);
+  text-shadow: 0px 2px 3px #555;
+}
+
+.midi {
+  width: 10vw;
+  height: 10vw;
+  margin: 0 10px;
+  border-radius: 7px;
+  border-style: outset;
+  display: inline-block;
+  background-color: #cbcbcb;
+}
+
+.midi:active {
+  border-style: inset;
+}
+
 .piano {
   height: 25vh;
   position: relative;

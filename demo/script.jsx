@@ -92,79 +92,88 @@ class Slides extends React.Component {
   render() {
     return (
       <div className="slides">
-        {this.props.measures
-          ? this.props.measures.map((measure, index) => (
-              <div
-                key={index}
-                className="slide"
-                style={{
-                  backgroundColor: index % 2 === 0 ? "#bcbcbc" : "#cbcbcb"
-                }}
-              >
-                <h1 className="measure">{index + 1}</h1>
-                {this.props.tracks
-                  ? this.props.tracks.map((track, color) =>
-                      track
-                        .filter(note => note.measure.index === index)
-                        .map(note => {
-                          const keyWidth =
-                            100 / this.props.keyboard.whiteKeys.length;
+        {this.props.measures ? (
+          this.props.measures.map((measure, index) => (
+            <div
+              key={index}
+              className="slide"
+              style={{
+                backgroundColor: index % 2 === 0 ? "#bcbcbc" : "#cbcbcb"
+              }}
+            >
+              <h1 className="measure">{index + 1}</h1>
+              {this.props.tracks
+                ? this.props.tracks.map((track, color) =>
+                    track
+                      .filter(note => note.measure.index === index)
+                      .map(note => {
+                        const keyWidth =
+                          100 / this.props.keyboard.whiteKeys.length;
 
-                          const pianoKey = this.props.keyboard.pianoKeys.filter(
-                            pianoKey => pianoKey.note === note.value
-                          )[0];
+                        const pianoKey = this.props.keyboard.pianoKeys.filter(
+                          pianoKey => pianoKey.note === note.value
+                        )[0];
 
-                          const keyIndex = this.props.keyboard.pianoKeys.indexOf(
-                            pianoKey
-                          );
+                        const keyIndex = this.props.keyboard.pianoKeys.indexOf(
+                          pianoKey
+                        );
 
-                          let left;
-                          let width;
-                          let zIndex;
-                          if (pianoKey.type === "white") {
-                            zIndex = 5;
-                            width = keyWidth;
-                            left = pianoKey.position * keyWidth;
-                          } else {
-                            zIndex = 6;
-                            width = 2 / 3 * keyWidth;
-                            left =
-                              (keyIndex - pianoKey.position - 1 / 3) * keyWidth;
-                          }
+                        let left;
+                        let width;
+                        let zIndex;
+                        if (pianoKey.type === "white") {
+                          zIndex = 5;
+                          width = keyWidth;
+                          left = pianoKey.position * keyWidth;
+                        } else {
+                          zIndex = 6;
+                          width = 2 / 3 * keyWidth;
+                          left =
+                            (keyIndex - pianoKey.position - 1 / 3) * keyWidth;
+                        }
 
-                          const height =
-                            (note.to - note.from + 1) /
-                            note.measure.ticks *
-                            100;
+                        const height =
+                          (note.to - note.from + 1) / note.measure.ticks * 100;
 
-                          let backgroundColor;
-                          if (color === 0) backgroundColor = "red";
-                          if (color === 1) backgroundColor = "green";
-                          if (color === 2) backgroundColor = "blue";
-                          if (color === 3) backgroundColor = "orange";
+                        let backgroundColor;
+                        if (color === 0) backgroundColor = "red";
+                        if (color === 1) backgroundColor = "green";
+                        if (color === 2) backgroundColor = "blue";
+                        if (color === 3) backgroundColor = "orange";
 
-                          if (pianoKey.type === "black")
-                            backgroundColor = "dark" + backgroundColor;
+                        if (pianoKey.type === "black")
+                          backgroundColor = "dark" + backgroundColor;
 
-                          return (
-                            <div
-                              key={index}
-                              className="note"
-                              style={{
-                                zIndex,
-                                backgroundColor,
-                                left: `${left}vw`,
-                                width: `${width}vw`,
-                                height: `${height}%`
-                              }}
-                            />
-                          );
-                        })
-                    )
-                  : null}
-              </div>
-            ))
-          : null}
+                        return (
+                          <div
+                            key={index}
+                            className="note"
+                            style={{
+                              zIndex,
+                              backgroundColor,
+                              left: `${left}vw`,
+                              width: `${width}vw`,
+                              height: `${height}%`
+                            }}
+                          />
+                        );
+                      })
+                  )
+                : null}
+            </div>
+          ))
+        ) : (
+          <div className="text">
+            <h1>Drag & Drop a MIDI File Anywhere </h1>
+            <h2>or</h2>
+            <h1>Select one of these: </h1>
+            <div className="midi"> </div>
+            <div className="midi"> </div>
+            <div className="midi"> </div>
+            <div className="midi"> </div>
+            <div className="midi"> </div>
+          </div>
+        )}
       </div>
     );
   }
