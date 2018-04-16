@@ -4,10 +4,11 @@ import Dropzone from "react-dropzone";
 
 import { Midiate } from "../build";
 
-import contraIcon from "./assets/contra.png";
-import contraMidi from "./assets/contra.mid";
+import midi from "./assets/midi.json";
 
-const assets = [{ icon: contraIcon, midi: contraMidi }];
+import contraIcon from "./assets/contra.png";
+
+const assets = [{ id: "contra", icon: contraIcon }];
 
 const KeyboardTypes = {
   $49: { startKey: 36, endKey: 84 },
@@ -29,8 +30,13 @@ class App extends React.Component {
     this.loadMidiFile = this.loadMidiFile.bind(this);
   }
 
-  loadMidiFile(midi) {
-    console.log(midi);
+  loadMidiFile(event) {
+    const id = event.target.id;
+    const midiate = new Midiate(midi[id]);
+    this.setState({
+      tracks: midiate.calculateNotes(),
+      measures: midiate.calculateMeasures()
+    });
   }
 
   onDrop(acceptedFiles, rejectedFiles) {
@@ -183,11 +189,10 @@ class Slides extends React.Component {
             {assets.map(asset => (
               <div className="midi">
                 <img
-                  className="icon"
+                  id={asset.id}
                   src={asset.icon}
-                  onClick={() => {
-                    this.props.loadMidi(asset.midi);
-                  }}
+                  className="icon"
+                  onClick={this.props.loadMidi}
                 />
               </div>
             ))}

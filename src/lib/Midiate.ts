@@ -11,8 +11,9 @@ import {
 const player = new Player();
 
 export class Midiate {
-  constructor(arrayBuffer: ArrayBuffer) {
-    player.loadArrayBuffer(arrayBuffer);
+  constructor(data: ArrayBuffer | string) {
+    if (typeof data === "string") player.loadDataUri(data);
+    if (typeof data === "object") player.loadArrayBuffer(data);
   }
 
   public calculateMeasures = (): Measure[] => {
