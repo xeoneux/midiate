@@ -6,9 +6,13 @@ import { Midiate } from "../build";
 
 import midi from "./assets/midi.json";
 
+import marioIcon from "./assets/mario.png";
 import contraIcon from "./assets/contra.png";
 
-const assets = [{ id: "contra", icon: contraIcon }];
+const assets = [
+  { id: "mario", icon: marioIcon },
+  { id: "contra", icon: contraIcon }
+];
 
 const KeyboardTypes = {
   $49: { startKey: 36, endKey: 84 },
@@ -187,7 +191,7 @@ class Slides extends React.Component {
             <h2>or</h2>
             <h1>Select one of these: </h1>
             {assets.map(asset => (
-              <div className="midi">
+              <div key={asset.id} className="midi">
                 <img
                   id={asset.id}
                   src={asset.icon}
@@ -196,7 +200,6 @@ class Slides extends React.Component {
                 />
               </div>
             ))}
-            <div className="midi"> </div>
             <div className="midi"> </div>
             <div className="midi"> </div>
             <div className="midi"> </div>
