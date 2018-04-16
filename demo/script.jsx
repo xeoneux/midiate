@@ -4,6 +4,11 @@ import Dropzone from "react-dropzone";
 
 import { Midiate } from "../build";
 
+import contraIcon from "./assets/contra.png";
+import contraMidi from "./assets/contra.mid";
+
+const assets = [{ icon: contraIcon, midi: contraMidi }];
+
 const KeyboardTypes = {
   $49: { startKey: 36, endKey: 84 },
   $54: { startKey: 36, endKey: 89 },
@@ -21,6 +26,11 @@ class App extends React.Component {
     };
 
     this.onDrop = this.onDrop.bind(this);
+    this.loadMidiFile = this.loadMidiFile.bind(this);
+  }
+
+  loadMidiFile(midi) {
+    console.log(midi);
   }
 
   onDrop(acceptedFiles, rejectedFiles) {
@@ -46,6 +56,7 @@ class App extends React.Component {
       <Dropzone className="app" onDrop={this.onDrop} disableClick={true}>
         <Slides
           tracks={this.state.tracks}
+          loadMidi={this.loadMidiFile}
           measures={this.state.measures}
           keyboard={this.state.keyboard}
         />
@@ -169,7 +180,17 @@ class Slides extends React.Component {
             <h1>Drag & Drop a MIDI File Anywhere </h1>
             <h2>or</h2>
             <h1>Select one of these: </h1>
-            <div className="midi"> </div>
+            {assets.map(asset => (
+              <div className="midi">
+                <img
+                  className="icon"
+                  src={asset.icon}
+                  onClick={() => {
+                    this.props.loadMidi(asset.midi);
+                  }}
+                />
+              </div>
+            ))}
             <div className="midi"> </div>
             <div className="midi"> </div>
             <div className="midi"> </div>
