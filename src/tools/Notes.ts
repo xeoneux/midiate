@@ -137,8 +137,7 @@ export function getMeasureForNoteEvent(
   noteTick: number,
   measures: Measure[]
 ): Measure {
-  for (let measure of measures) {
-    if (noteTick <= measure.to && noteTick >= measure.from) return measure;
-  }
-  throw new Error("Not in provided measures");
+  return measures.find(
+    measure => noteTick <= measure.to && noteTick >= measure.from
+  )!;
 }

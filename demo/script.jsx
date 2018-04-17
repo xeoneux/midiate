@@ -132,9 +132,9 @@ class Slides extends React.Component {
                         const keyWidth =
                           100 / this.props.keyboard.whiteKeys.length;
 
-                        const pianoKey = this.props.keyboard.pianoKeys.filter(
+                        const pianoKey = this.props.keyboard.pianoKeys.find(
                           pianoKey => pianoKey.note === note.value
-                        )[0];
+                        );
 
                         const keyIndex = this.props.keyboard.pianoKeys.indexOf(
                           pianoKey

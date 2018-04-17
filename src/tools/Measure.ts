@@ -35,15 +35,16 @@ export function getMeasures(
       measures.push({ to, from, beat, ticks, index });
     }
 
-    if (perfectMeasures !== totalMeasures) {
-      measures.push({
-        beat,
-        to: nextChangeTick,
-        from: measure * perfectMeasures,
-        ticks: nextChangeTick - measure * perfectMeasures + 1,
-        index: perfectMeasures + 1
-      });
-    }
+    measures.push({
+      beat,
+      to: nextChangeTick,
+      from: measure * perfectMeasures,
+      ticks: nextChangeTick - measure * perfectMeasures + 1,
+      index:
+        perfectMeasures !== totalMeasures
+          ? perfectMeasures + 1
+          : perfectMeasures
+    });
   });
 
   return measures;
