@@ -7,13 +7,15 @@ import { Midiate } from "../build";
 import marioIcon from "./assets/mario.png";
 import zeldaIcon from "./assets/zelda.png";
 import contraIcon from "./assets/contra.png";
+import tetrisIcon from "./assets/tetris.png";
 
 let loading;
 
 const assets = [
   { id: "mario", icon: marioIcon },
   { id: "zelda", icon: zeldaIcon },
-  { id: "contra", icon: contraIcon }
+  { id: "contra", icon: contraIcon },
+  { id: "tetris", icon: tetrisIcon }
 ];
 
 const KeyboardTypes = {
@@ -45,6 +47,7 @@ class App extends React.Component {
     if (id === "mario") file = import(`./assets/mario.json`);
     if (id === "zelda") file = import(`./assets/zelda.json`);
     if (id === "contra") file = import(`./assets/contra.json`);
+    if (id === "tetris") file = import(`./assets/tetris.json`);
     file.then(midi => {
       const midiate = new Midiate(midi[id]);
       const measures = midiate.calculateMeasures();
@@ -178,7 +181,7 @@ class Slides extends React.Component {
 
                         return (
                           <div
-                            key={note.value + "" + note.to + "" + note.from}
+                            key={note.value + "" + note.from + "" + color}
                             className="note"
                             style={{
                               zIndex,
