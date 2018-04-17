@@ -17,15 +17,13 @@ export function getTimeSignatures(tracks: Event[][]): TimeSignature[] {
   let initialExists = false;
   const timeSignatures: TimeSignature[] = [];
 
-  tracks.forEach(events =>
-    events.forEach(event => {
-      if (event.name === "Time Signature") {
-        const { upper, lower } = parseTimeSignature(event.timeSignature);
-        timeSignatures.push({ upper, lower, tick: event.tick });
-        if (event.tick === 0) initialExists = true;
-      }
-    })
-  );
+  tracks[0].forEach(event => {
+    if (event.name === "Time Signature") {
+      const { upper, lower } = parseTimeSignature(event.timeSignature);
+      timeSignatures.push({ upper, lower, tick: event.tick });
+      if (event.tick === 0) initialExists = true;
+    }
+  });
 
   if (!initialExists) {
     timeSignatures.unshift({

@@ -37,10 +37,9 @@ class App extends React.Component {
   loadMidiFile(event) {
     const id = event.target.id;
     const midiate = new Midiate(midi[id]);
-    this.setState({
-      tracks: midiate.calculateNotes(),
-      measures: midiate.calculateMeasures()
-    });
+    const measures = midiate.calculateMeasures();
+    const tracks = midiate.calculateNotes(measures);
+    this.setState({ tracks, measures });
   }
 
   onDrop(acceptedFiles, rejectedFiles) {

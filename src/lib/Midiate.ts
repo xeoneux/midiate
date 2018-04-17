@@ -21,8 +21,7 @@ export class Midiate {
     return getMeasures(player.division, player.totalTicks, timeSignatures);
   };
 
-  public calculateNotes = (): Note[][] => {
-    const measures = this.calculateMeasures();
+  public calculateNotes = (measures: Measure[]): Note[][] => {
     const noteEventTracks = getNoteEventTracks(player.getEvents(), measures);
     return generateNotesForMeasures(noteEventTracks);
   };
