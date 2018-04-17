@@ -1,15 +1,21 @@
 {
   "name": "midiate",
-  "version": "0.0.3",
+  "version": "1.0.0",
   "description": "Tool to derive data from MIDI files",
-  "main": "build/index.js",
+  "main": "build/main/index.js",
+  "module": "build/module/index.js",
+  "typings": "build/main/index.d.ts",
   "homepage": "https://xeoneux.github.io/midiate",
   "scripts": {
-    "compile": "rimraf dist && rimraf build && tsc",
+    "clean": "concurrently \"rimraf dist\" \"rimraf build\"",
+    "build": "concurrently \"tsc -p tsconfig.json\" \"tsc -p tsconfig.module.json\"",
     "parcel": "parcel build demo/index.htm --public-url /midiate/",
-    "publish": "npm run compile && npm run parcel && gh-pages -d dist",
+    "publish": "npm run build && npm run parcel && gh-pages  -d dist",
     "start": "concurrently \"tsc -w\" \"parcel demo/index.htm --open\""
   },
+  "files": [
+    "build"
+  ],
   "keywords": [],
   "author": {
     "name": "Aayush Kapoor",

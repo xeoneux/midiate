@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import Dropzone from "react-dropzone";
 
-import { Midiate } from "../build";
+import { Midiate } from "../build/main";
 
 import marioIcon from "./assets/mario.png";
 import zeldaIcon from "./assets/zelda.png";
@@ -215,9 +215,6 @@ class Slides extends React.Component {
                 />
               </div>
             ))}
-            <div className="midi"> </div>
-            <div className="midi"> </div>
-            <div className="midi"> </div>
           </div>
         )}
       </div>
