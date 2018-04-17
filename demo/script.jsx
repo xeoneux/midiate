@@ -4,8 +4,6 @@ import Dropzone from "react-dropzone";
 
 import { Midiate } from "../build";
 
-import midi from "./assets/midi.json";
-
 import marioIcon from "./assets/mario.png";
 import contraIcon from "./assets/contra.png";
 
@@ -36,10 +34,15 @@ class App extends React.Component {
 
   loadMidiFile(event) {
     const id = event.target.id;
-    const midiate = new Midiate(midi[id]);
-    const measures = midiate.calculateMeasures();
-    const tracks = midiate.calculateNotes(measures);
-    this.setState({ tracks, measures });
+    let file;
+    if (id === "mario") file = import(`./assets/mario.json`);
+    if (id === "contra") file = import(`./assets/contra.json`);
+    file.then(midi => {
+      const midiate = new Midiate(midi[id]);
+      const measures = midiate.calculateMeasures();
+      const tracks = midiate.calculateNotes(measures);
+      this.setState({ tracks, measures });
+    });
   }
 
   onDrop(acceptedFiles, rejectedFiles) {
