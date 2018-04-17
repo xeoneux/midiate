@@ -5,10 +5,14 @@ import Dropzone from "react-dropzone";
 import { Midiate } from "../build";
 
 import marioIcon from "./assets/mario.png";
+import zeldaIcon from "./assets/zelda.png";
 import contraIcon from "./assets/contra.png";
+
+let loading;
 
 const assets = [
   { id: "mario", icon: marioIcon },
+  { id: "zelda", icon: zeldaIcon },
   { id: "contra", icon: contraIcon }
 ];
 
@@ -33,15 +37,20 @@ class App extends React.Component {
   }
 
   loadMidiFile(event) {
-    const id = event.target.id;
+    if (loading) return;
+
     let file;
+    loading = true;
+    const id = event.target.id;
     if (id === "mario") file = import(`./assets/mario.json`);
+    if (id === "zelda") file = import(`./assets/zelda.json`);
     if (id === "contra") file = import(`./assets/contra.json`);
     file.then(midi => {
       const midiate = new Midiate(midi[id]);
       const measures = midiate.calculateMeasures();
       const tracks = midiate.calculateNotes(measures);
       this.setState({ tracks, measures });
+      loading = false;
     });
   }
 
@@ -51,10 +60,9 @@ class App extends React.Component {
       reader.onload = () => {
         const arrayBuffer = reader.result;
         const midiate = new Midiate(arrayBuffer);
-        this.setState({
-          tracks: midiate.calculateNotes(),
-          measures: midiate.calculateMeasures()
-        });
+        const measures = midiate.calculateMeasures();
+        const tracks = midiate.calculateNotes(measures);
+        this.setState({ tracks, measures });
       };
       reader.onerror = () => console.log("file reading has failed");
       reader.onabort = () => console.log("file reading was aborted");
