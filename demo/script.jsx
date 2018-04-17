@@ -159,10 +159,10 @@ class Slides extends React.Component {
                         const height =
                           (note.to - note.from + 1) / note.measure.ticks * 100;
 
-                        let backgroundColor;
+                        let backgroundColor = "violet";
                         if (color === 0) backgroundColor = "red";
-                        if (color === 1) backgroundColor = "green";
-                        if (color === 2) backgroundColor = "blue";
+                        if (color === 1) backgroundColor = "blue";
+                        if (color === 2) backgroundColor = "green";
                         if (color === 3) backgroundColor = "orange";
 
                         if (pianoKey.type === "black")
@@ -178,7 +178,9 @@ class Slides extends React.Component {
                               left: `${left}vw`,
                               width: `${width}vw`,
                               height: `${height}%`,
-                              top: `${note.from / note.measure.ticks * 100}%`
+                              top: `${100 *
+                                (note.from % note.measure.ticks) /
+                                note.measure.ticks}%`
                             }}
                           />
                         );

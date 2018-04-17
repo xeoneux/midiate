@@ -128,7 +128,7 @@ export function generateNotesForMeasures(
       }
     });
 
-    noteTracks.push(notes);
+    if (notes.length) noteTracks.push(notes);
   });
   return noteTracks;
 }
