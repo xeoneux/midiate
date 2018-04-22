@@ -1,6 +1,6 @@
 {
   "name": "midiate",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Tool to derive data from MIDI files",
   "main": "build/main/index.js",
   "module": "build/module/index.js",
@@ -10,7 +10,7 @@
     "clean": "concurrently \"rimraf dist\" \"rimraf build\"",
     "build": "concurrently \"tsc -p tsconfig.json\" \"tsc -p tsconfig.module.json\"",
     "parcel": "parcel build demo/index.htm --public-url /midiate/",
-    "publish": "npm run build && npm run parcel && gh-pages  -d dist",
+    "publish": "npm run build && npm run parcel && gh-pages -d dist",
     "start": "concurrently \"tsc -w\" \"parcel demo/index.htm --open\""
   },
   "files": [
