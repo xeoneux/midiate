@@ -15,7 +15,7 @@
 <br>
 
 <div align="center">
-  <img src="https://i.imgur.com/nDYo6bW.png" alt="Pianolive" style="margin-bottom: 1rem">
+  <img src="https://i.imgur.com/nDYo6bW.png" alt="Midiate" style="margin-bottom: 1rem">
 </div>
 
 <div align="center">
